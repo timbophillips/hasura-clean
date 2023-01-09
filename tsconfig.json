@@ -1,0 +1,33 @@
+{
+  // rules are rules
+  "extends": "@tsconfig/node18-strictest-esm/tsconfig.json",
+  "ts-node": {
+      "files": true
+  },
+  "compilerOptions": {
+      // stick to the latest
+      "module": "NodeNext",
+      "target": "ESNext",
+      "lib": [
+          "ESNext"
+      ],
+      "moduleResolution": "NodeNext",
+      // folders
+      "outDir": "js",
+      "baseUrl": "",
+      "paths": {
+          "*": [
+              "node_modules/*",
+              "types/*"
+          ]
+      },
+  },
+  "include": [
+      "ts/**/*",
+      "static/**/*",
+      "json/**/*",
+      "types/**/*"
+  ],
+  "exclude": [
+  ]
+}
