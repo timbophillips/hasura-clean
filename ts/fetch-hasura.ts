@@ -16,8 +16,9 @@ export async function fetchHasuraGraphQL({
   const hasuraAdminSecret = hasuraURL.username || undefined;
   // if an endpoint is provided then use it
   // otherwise use the one in the provided URI string
-  const hasuraEndpoint = hasuraURL.origin+ hasuraURL.pathname;
+  const hasuraEndpoint = hasuraURL.origin + hasuraURL.pathname;
 
+  console.log(`hasura endpoint: ${hasuraEndpoint}`);
 
   // data is returned as undefined if there is an error
   // errors is returned as undefined if there is no error
@@ -27,20 +28,21 @@ export async function fetchHasuraGraphQL({
     headers: hasuraAdminSecret
       ? { "x-hasura-admin-secret": hasuraAdminSecret }
       : {},
-    body:
-      JSON.stringify({
-        query,
-        variables,
-        operationName,
-      }),
+    body: JSON.stringify({
+      query,
+      variables,
+      operationName,
+    }),
   };
 
   console.log("requestInit = ");
   console.log(JSON.stringify(requestInit, null, 2));
 
-  const result = await fetch(hasuraEndpoint, requestInit);
+  const response = await fetch(hasuraEndpoint, requestInit);
 
-  return (await result.json()) as {
+  console.log(`Response status: ${response.status}`);
+
+  return (await response.json()) as {
     data: Record<string, any>;
     errors: Record<string, any>;
   };
@@ -48,16 +50,18 @@ export async function fetchHasuraGraphQL({
 
 export async function fetchHasuraMetadata({
   hasuraURI,
-  data,
+  jsonData,
 }: {
-  data: Record<string, any>;
+  jsonData: string;
   hasuraURI: string;
 }): Promise<{ data: Record<string, any>; errors: Record<string, any> }> {
   const hasuraURL = new URL(hasuraURI);
   const hasuraAdminSecret = hasuraURL.username || undefined;
   // if an endpoint is provided then use it
   // otherwise use the one in the provided URI string
-  const hasuraEndpoint = hasuraURL.origin+ "/v1/metadata"
+  const hasuraEndpoint = hasuraURL.origin + "/v1/metadata";
+
+  console.log(`hasura endpoint: ${hasuraEndpoint}`);
 
   // data is returned as undefined if there is an error
   // errors is returned as undefined if there is no error
@@ -66,18 +70,24 @@ export async function fetchHasuraMetadata({
     method: "POST",
     headers: hasuraAdminSecret
       ? { "x-hasura-admin-secret": hasuraAdminSecret }
-      : {},
-    body:
-      data,
+      : { "X-Hasura-Role": "admin", "Content-Type": "application/json" },
+    body: jsonData,
   };
 
   console.log("requestInit = ");
   console.log(JSON.stringify(requestInit, null, 2));
 
-  const result = await fetch(hasuraEndpoint, requestInit);
+  const response = await fetch(hasuraEndpoint, requestInit);
+  console.log(`Response status: ${response.status}`);
 
-  return (await result.json()) as {
+  const { data, errors } = (await response.json()) as {
     data: Record<string, any>;
     errors: Record<string, any>;
   };
+  console.log(`data: `);
+  console.log(JSON.stringify(data));
+  console.log(`errors: `);
+  console.log(JSON.stringify(errors));
+
+  return { data, errors };
 }

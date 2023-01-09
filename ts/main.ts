@@ -5,10 +5,9 @@ const jsonDataFile = process.argv[2];
 
 if (jsonDataFile) {
   const jsonDataUtf8 = await readFile(jsonDataFile, { encoding: "utf8" });
-  const jsonData = JSON.parse(jsonDataUtf8);
   const { data, errors } = await fetchHasuraMetadata({
     hasuraURI: "http://localhost:8080/v1/graphql",
-    data: jsonData,
+    jsonData: jsonDataUtf8,
   });
 
   if (data) {
