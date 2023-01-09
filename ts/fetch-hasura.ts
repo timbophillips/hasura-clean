@@ -35,9 +35,6 @@ export async function fetchHasuraGraphQL({
     }),
   };
 
-  console.log("requestInit = ");
-  console.log(JSON.stringify(requestInit, null, 2));
-
   const response = await fetch(hasuraEndpoint, requestInit);
 
   console.log(`Response status: ${response.status}`);
@@ -73,9 +70,6 @@ export async function fetchHasuraMetadata({
       : { "X-Hasura-Role": "admin", "Content-Type": "application/json" },
     body: jsonData,
   };
-
-  console.log("requestInit = ");
-  console.log(JSON.stringify(requestInit, null, 2));
 
   const response = await fetch(hasuraEndpoint, requestInit);
   console.log(`Response status: ${response.status}`);
