@@ -4,10 +4,10 @@ import { fetchHasuraMetadata } from "./fetch-hasura.js";
 const jsonDataFile = process.argv[2];
 
 if (jsonDataFile) {
-  const jsonDataUtf8 = await readFile(jsonDataFile, { encoding: "utf8" });
+  const jsonString = await readFile(jsonDataFile, { encoding: "utf8" });
   const { data, errors } = await fetchHasuraMetadata({
     hasuraURI: "http://localhost:8080/v1/graphql",
-    jsonData: jsonDataUtf8,
+    jsonData: jsonString,
   });
 
   if (data) {
