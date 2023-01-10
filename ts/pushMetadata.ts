@@ -7,7 +7,7 @@ if (jsonDataFile) {
   const jsonString = await readFile(jsonDataFile, { encoding: "utf8" });
   await fetchHasuraMetadata({
     hasuraURI: "http://localhost:8080/v1/graphql",
-    jsonString: jsonString,
+    json: jsonString,
   });
 
 } else {

@@ -47,9 +47,9 @@ export async function fetchHasuraGraphQL({
 
 export async function fetchHasuraMetadata({
   hasuraURI,
-  jsonString,
+  json,
 }: {
-  jsonString: string;
+  json: string | {};
   hasuraURI: string;
 }): Promise<string> {
   const hasuraURL = new URL(hasuraURI);
@@ -57,6 +57,8 @@ export async function fetchHasuraMetadata({
   // if an endpoint is provided then use it
   // otherwise use the one in the provided URI string
   const hasuraEndpoint = hasuraURL.origin + "/v1/metadata";
+
+  const jsonString = typeof json === "string" ? json : JSON.stringify(json);
 
   console.log(`hasura endpoint: ${hasuraEndpoint}`);
 
@@ -75,7 +77,7 @@ export async function fetchHasuraMetadata({
   console.log(`Response status: ${response.status}`);
 
   const responseText = await response.text();
-  console.log(`Response Text ${responseText}`)
+  console.log(`Response Text ${responseText}`);
 
   return responseText;
 }
@@ -116,7 +118,7 @@ export async function fetchHasuraRunSQL({
   console.log(`Response status: ${response.status}`);
 
   const responseText = await response.text();
-  console.log(`Response Text ${responseText}`)
+  console.log(`Response Text ${responseText}`);
 
   return responseText;
 }

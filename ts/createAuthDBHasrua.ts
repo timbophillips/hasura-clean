@@ -29,7 +29,7 @@ const jsonClearMetadataString = await readFile(jsonClearMetadataStringFile, {
 });
 await fetchHasuraMetadata({
   hasuraURI: "http://localhost:8080/v1/graphql",
-  jsonString: jsonClearMetadataString,
+  json: jsonClearMetadataString,
 });
 
 const jsonAddDatabaseMetadataString = await readFile(
@@ -38,7 +38,7 @@ const jsonAddDatabaseMetadataString = await readFile(
 );
 await fetchHasuraMetadata({
   hasuraURI: "http://localhost:8080/v1/graphql",
-  jsonString: jsonAddDatabaseMetadataString,
+  json: jsonAddDatabaseMetadataString,
 });
 
 const sqlString = await readFile(sqlUpFile, { encoding: "utf8" });
@@ -53,7 +53,7 @@ const jsonTrackUsersTableMetadataString = await readFile(
 );
 await fetchHasuraMetadata({
   hasuraURI: "http://localhost:8080/v1/graphql",
-  jsonString: jsonTrackUsersTableMetadataString,
+  json: jsonTrackUsersTableMetadataString,
 });
 
 const jsonTrackRefreshTokensTableMetadataString = await readFile(
@@ -62,7 +62,7 @@ const jsonTrackRefreshTokensTableMetadataString = await readFile(
 );
 await fetchHasuraMetadata({
   hasuraURI: "http://localhost:8080/v1/graphql",
-  jsonString: jsonTrackRefreshTokensTableMetadataString,
+  json: jsonTrackRefreshTokensTableMetadataString,
 });
 
 const jsonReloadMetadataString = await readFile(jsonReloadMetadataStringFile, {
@@ -70,7 +70,7 @@ const jsonReloadMetadataString = await readFile(jsonReloadMetadataStringFile, {
 });
 await fetchHasuraMetadata({
   hasuraURI: "http://localhost:8080/v1/graphql",
-  jsonString: jsonReloadMetadataString,
+  json: jsonReloadMetadataString,
 });
 
 const jsonUsersString = await readFile(jsonUsersFile, {

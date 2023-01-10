@@ -2,7 +2,7 @@
     "type" : "reload_metadata",
     "args": {
         "reload_remote_schemas": true,
-        "reload_sources": false,
+        "reload_sources": true,
         "recreate_event_triggers": true
     }
 }
