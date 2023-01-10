@@ -1,0 +1,8 @@
+{
+    "type" : "reload_metadata",
+    "args": {
+        "reload_remote_schemas": true,
+        "reload_sources": false,
+        "recreate_event_triggers": true
+    }
+}

@@ -1,0 +1,7 @@
+{
+    "type": "pg_track_table",
+    "args": {
+        "source": "authDB",
+        "table": "users"
+    }
+}

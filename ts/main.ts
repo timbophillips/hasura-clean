@@ -1,22 +1,45 @@
 import { readFile } from "fs/promises";
-import { fetchHasuraMetadata } from "./fetch-hasura.js";
+import { fetchHasuraMetadata, fetchHasuraRunSQL } from "./fetch-hasura.js";
 
-const jsonDataFile = process.argv[2];
+const jsonAttachDatabaseStringFile = "json/attach-postgres-to-hasura.json";
+const jsonClearMetadataStringFile = "json/clear-metadata.json"
+const sqlUpFile = "sql/up.sql";
+const jsonTrackUsersTableMetadataStringFile = "json/track-users-table.json";
+const jsonTracRefreshTokensTableMetadataStringFile = "json/track-refreshtokens-table.json";
+const jsonReloadMetadataStringFile = "json/reload-metadata.json"
 
-if (jsonDataFile) {
-  const jsonString = await readFile(jsonDataFile, { encoding: "utf8" });
-  const { data, errors } = await fetchHasuraMetadata({
-    hasuraURI: "http://localhost:8080/v1/graphql",
-    jsonData: jsonString,
-  });
+const jsonClearMetadataString = await readFile(jsonClearMetadataStringFile, { encoding: "utf8" });
+await fetchHasuraMetadata({
+  hasuraURI: "http://localhost:8080/v1/graphql",
+  jsonString: jsonClearMetadataString,
+});
 
-  if (data) {
-    console.log(JSON.stringify(data));
-  } else if (errors) {
-    console.error(errors);
-  } else {
-    console.log("nuffin");
-  }
-} else {
-  console.log("must provide a file");
-}
+const jsonAddDatabaseMetadataString = await readFile(jsonAttachDatabaseStringFile, { encoding: "utf8" });
+await fetchHasuraMetadata({
+  hasuraURI: "http://localhost:8080/v1/graphql",
+  jsonString: jsonAddDatabaseMetadataString,
+});
+
+const sqlString = await readFile(sqlUpFile, { encoding: "utf8" });
+await fetchHasuraRunSQL({
+  hasuraURI: "http://localhost:8080/v1/graphql",
+  sql: sqlString,
+});
+ 
+const jsonTrackUsersTableMetadataString = await readFile(jsonTrackUsersTableMetadataStringFile, { encoding: "utf8" });
+await fetchHasuraMetadata({
+  hasuraURI: "http://localhost:8080/v1/graphql",
+  jsonString: jsonTrackUsersTableMetadataString,
+});
+
+const jsonTrackRefreshTokensTableMetadataString = await readFile(jsonTracRefreshTokensTableMetadataStringFile, { encoding: "utf8" });
+await fetchHasuraMetadata({
+  hasuraURI: "http://localhost:8080/v1/graphql",
+  jsonString: jsonTrackRefreshTokensTableMetadataString,
+});
+
+const jsonReloadMetadataString = await readFile(jsonReloadMetadataStringFile, { encoding: "utf8" });
+await fetchHasuraMetadata({
+  hasuraURI: "http://localhost:8080/v1/graphql",
+  jsonString: jsonReloadMetadataString,
+});

@@ -47,11 +47,11 @@ export async function fetchHasuraGraphQL({
 
 export async function fetchHasuraMetadata({
   hasuraURI,
-  jsonData,
+  jsonString,
 }: {
-  jsonData: string;
+  jsonString: string;
   hasuraURI: string;
-}): Promise<{ data: Record<string, any>; errors: Record<string, any> }> {
+}): Promise<string> {
   const hasuraURL = new URL(hasuraURI);
   const hasuraAdminSecret = hasuraURL.username || undefined;
   // if an endpoint is provided then use it
@@ -68,20 +68,55 @@ export async function fetchHasuraMetadata({
     headers: hasuraAdminSecret
       ? { "x-hasura-admin-secret": hasuraAdminSecret }
       : { "X-Hasura-Role": "admin", "Content-Type": "application/json" },
-    body: jsonData,
+    body: jsonString,
   };
 
   const response = await fetch(hasuraEndpoint, requestInit);
   console.log(`Response status: ${response.status}`);
 
-  const { data, errors } = (await response.json()) as {
-    data: Record<string, any>;
-    errors: Record<string, any>;
-  };
-  console.log(`data: `);
-  console.log(JSON.stringify(data));
-  console.log(`errors: `);
-  console.log(JSON.stringify(errors));
+  const responseText = await response.text();
+  console.log(`Response Text ${responseText}`)
 
-  return { data, errors };
+  return responseText;
+}
+
+export async function fetchHasuraRunSQL({
+  hasuraURI,
+  sql,
+}: {
+  sql: string;
+  hasuraURI: string;
+}): Promise<string> {
+  const hasuraURL = new URL(hasuraURI);
+  const hasuraAdminSecret = hasuraURL.username || undefined;
+  // if an endpoint is provided then use it
+  // otherwise use the one in the provided URI string
+  const hasuraEndpoint = hasuraURL.origin + "/v2/query";
+
+  console.log(`hasura endpoint: ${hasuraEndpoint}`);
+
+  // data is returned as undefined if there is an error
+  // errors is returned as undefined if there is no error
+
+  const requestInit: RequestInit = {
+    method: "POST",
+    headers: hasuraAdminSecret
+      ? { "x-hasura-admin-secret": hasuraAdminSecret }
+      : { "X-Hasura-Role": "admin", "Content-Type": "application/json" },
+    body: JSON.stringify({
+      type: "run_sql",
+      args: {
+        source: "authDB",
+        sql: sql,
+      },
+    }),
+  };
+
+  const response = await fetch(hasuraEndpoint, requestInit);
+  console.log(`Response status: ${response.status}`);
+
+  const responseText = await response.text();
+  console.log(`Response Text ${responseText}`)
+
+  return responseText;
 }
