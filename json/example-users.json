@@ -1,0 +1,38 @@
+[
+    {
+        "id": 4,
+        "username": "north",
+        "role": "user",
+        "password": "$2a$10$1WNdidY4J0cGc0q5nRhjTeyj7cTXxj7tVEgKDykBxPoK6MOX5I4Ju",
+        "last_seen": "2022-04-03T07:11:12.271+00:00",
+        "group": "north",
+        "created_at": "2022-04-03T05:34:49.376436+00:00"
+    },
+    {
+        "id": 3,
+        "username": "wood",
+        "role": "user",
+        "password": "$2a$10$1WNdidY4J0cGc0q5nRhjTeyj7cTXxj7tVEgKDykBxPoK6MOX5I4Ju",
+        "last_seen": "2022-04-03T07:15:04.479+00:00",
+        "group": "wood",
+        "created_at": "2022-04-03T05:34:49.376436+00:00"
+    },
+    {
+        "id": 2,
+        "username": "rewardchart",
+        "role": "superuser",
+        "password": "$2a$10$gLfCG.5Jnn0q5EY9rOLauOClE0kBPUryw9/RUlkc3UHnnmFnSfVQ6",
+        "last_seen": "2022-04-03T12:56:25.394+00:00",
+        "group": "rewardchart",
+        "created_at": "2022-04-03T11:40:40.897484+00:00"
+    },
+    {
+        "id": 1,
+        "username": "admin",
+        "role": "admin",
+        "password": "$2a$10$uMKnInCmjY8wYkhQ/TvSGu2LovizkUunUn3i1IV3zrfviWQi9iiRO",
+        "last_seen": "2022-12-20T03:34:21.461+00:00",
+        "group": "",
+        "created_at": "2021-10-27T15:35:36.504379+00:00"
+    }
+]
