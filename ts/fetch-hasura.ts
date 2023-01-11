@@ -1,5 +1,4 @@
 import fetch, { RequestInit } from "node-fetch";
-// import {} from "../types/index.js";
 
 export async function fetchHasuraGraphQL({
   hasuraURI,
